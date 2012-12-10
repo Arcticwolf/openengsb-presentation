@@ -1,0 +1,128 @@
+<transformations>
+  <!-- 
+       transform from normal to counterpart issue 
+  -->
+  <transformation id="NormalIssueToExternalIssue"
+  source="org.openengsb.domain.issue.Issue;3.0.0.SNAPSHOT"
+  target="org.openengsb.domain.presentation.model.ExternalIssue;3.0.0.SNAPSHOT">
+    <prefixChange>
+      <source-field>id</source-field>
+      <target-field>internal_id</target-field>
+      <params>
+        <param key="oldPrefix" value="issue"/>
+        <param key="newPrefix" value="externalIssue"/>
+      </params>
+    </prefixChange>
+    <forward>
+      <source-field>summary</source-field>
+      <target-field>title</target-field>
+    </forward>
+    <forward>
+      <source-field>description</source-field>
+      <target-field>summary</target-field>
+    </forward>
+    <forward>
+      <source-field>reporter</source-field>
+      <target-field>reporter</target-field>
+    </forward>
+    <forward>
+      <source-field>owner</source-field>
+      <target-field>assignee</target-field>
+    </forward>
+    <forward>
+      <source-field>dueVersion</source-field>
+      <target-field>due</target-field>
+    </forward>
+    <instantiate>
+      <target-field>metaInfo</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.presentation.model.IssueMetaInfo;3.0.0.SNAPSHOT" />
+      </params>
+    </instantiate>
+    <toString>
+      <source-field>priority</source-field>
+      <target-field>metaInfo.priority</target-field>
+    </toString>
+    <toString>
+      <source-field>status</source-field>
+      <target-field>metaInfo.status</target-field>
+    </toString>
+    <toString>
+      <source-field>type</source-field>
+      <target-field>metaInfo.type</target-field>
+    </toString>
+    <flatList>
+      <source-field>components</source-field>
+      <target-field>involved</target-field>
+      <params>
+        <param key="concatString" value=", " />
+      </params>
+    </flatList>
+  </transformation>
+  <!-- 
+       transform from counterpart to normal issue 
+  -->
+  <transformation id="ExternalIssueToNormalIssue"
+  source="org.openengsb.domain.presentation.model.ExternalIssue;3.0.0.SNAPSHOT"
+  target="org.openengsb.domain.issue.Issue;3.0.0.SNAPSHOT">
+    <prefixChange>
+      <source-field>internal_id</source-field>
+      <target-field>id</target-field>
+      <params>
+        <param key="oldPrefix" value="externalIssue"/>
+        <param key="newPrefix" value="issue"/>
+      </params>
+    </prefixChange>
+    <forward>
+      <source-field>title</source-field>
+      <target-field>summary</target-field>
+    </forward>
+    <forward>
+      <source-field>summary</source-field>
+      <target-field>description</target-field>
+    </forward>
+    <forward>
+      <source-field>reporter</source-field>
+      <target-field>reporter</target-field>
+    </forward>
+    <forward>
+      <source-field>assignee</source-field>
+      <target-field>owner</target-field>
+    </forward>
+    <forward>
+      <source-field>due</source-field>
+      <target-field>dueVersion</target-field>
+    </forward>
+    <instantiate>
+      <source-field>metaInfo.priority</source-field>
+      <target-field>priority</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.issue.Priority;3.0.0.SNAPSHOT" />
+        <param key="targetTypeInit" value="valueOf" />
+      </params>
+    </instantiate>
+    <instantiate>
+      <source-field>metaInfo.status</source-field>
+      <target-field>status</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.issue.Status;3.0.0.SNAPSHOT" />
+        <param key="targetTypeInit" value="valueOf" />
+      </params>
+    </instantiate>
+    <instantiate>
+      <source-field>metaInfo.type</source-field>
+      <target-field>type</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.issue.Type;3.0.0.SNAPSHOT" />
+        <param key="targetTypeInit" value="valueOf" />
+      </params>
+    </instantiate>
+    <createList>
+      <source-field>involved</source-field>
+      <target-field>components</target-field>
+      <params>
+        <param key="splitString" value=", " />
+      </params>
+    </createList>
+  </transformation>
+</transformations>

@@ -1,0 +1,84 @@
+<transformations>
+	<transformation id="AtoB"  
+		source="org.openengsb.domain.presentation.model.SimpleModelA;3.0.0.SNAPSHOT"
+	    target="org.openengsb.domain.presentation.model.SimpleModelB;3.0.0.SNAPSHOT">
+		<forward>
+	  		<source-field>nameA</source-field>
+	  		<target-field>nameB</target-field>
+		</forward>
+		<forward>
+	  		<source-field>numberA</source-field>
+	  		<target-field>numberB</target-field>
+		</forward>
+		<forward>
+	  		<source-field>descriptionA</source-field>
+	  		<target-field>descriptionB</target-field>
+		</forward>
+		<concat>
+			<source-fields>
+				<source-field>commentA1</source-field>
+				<source-field>commentA2</source-field>
+			</source-fields>
+			<target-field>commentB</target-field>
+			<params>
+				<param key="concatString" value=" " />
+			</params>
+		</concat>
+	</transformation>
+	<transformation id="BtoC" 
+		source="org.openengsb.domain.presentation.model.SimpleModelB;3.0.0.SNAPSHOT"
+	    target="org.openengsb.domain.presentation.model.SimpleModelC;3.0.0.SNAPSHOT">
+		<forward>
+	  		<source-field>nameB</source-field>
+	  		<target-field>identifierC</target-field>
+		</forward>
+		<forward>
+	  		<source-field>numberB</source-field>
+	  		<target-field>elementC</target-field>
+		</forward>
+		<forward>
+	  		<source-field>descriptionB</source-field>
+	  		<target-field>blaC</target-field>
+		</forward>
+		<split>
+			<source-field>commentB</source-field>
+			<target-field>commentPartC1</target-field>
+			<params>
+				<param key="splitString" value=" "/>
+				<param key="resultIndex" value="0"/>
+			</params>
+		</split>
+		<split>
+			<source-field>commentB</source-field>
+			<target-field>commentPartC2</target-field>
+			<params>
+				<param key="splitString" value=" "/>
+				<param key="resultIndex" value="1"/>
+			</params>
+		</split>
+	</transformation>
+	<transformation id="CtoD" 
+		source="org.openengsb.domain.presentation.model.SimpleModelC;3.0.0.SNAPSHOT"
+	    target="org.openengsb.domain.presentation.model.SimpleModelD;3.0.0.SNAPSHOT">
+		<forward>
+	  		<source-field>identifierC</source-field>
+	  		<target-field>identifierD</target-field>
+		</forward>
+		<forward>
+	  		<source-field>elementC</source-field>
+	  		<target-field>elementD</target-field>
+		</forward>
+		<forward>
+	  		<source-field>blaC</source-field>
+	  		<target-field>blubD</target-field>
+		</forward>
+		<forward>
+	  		<source-field>commentPartC1</source-field>
+	  		<target-field>commentPartD1</target-field>
+		</forward>
+		<forward>
+	  		<source-field>commentPartC2</source-field>
+	  		<target-field>commentPartD2</target-field>
+		</forward>
+	</transformation>
+</transformations>

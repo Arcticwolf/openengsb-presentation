@@ -1,0 +1,188 @@
+<transformations>
+  <!-- 
+       transform from normal to counterpart requirement 
+  -->
+  <transformation id="NormalReqToExternalReq"
+  source="org.openengsb.domain.requirement.Requirement;1.0.0.SNAPSHOT"
+  target="org.openengsb.domain.presentation.model.ExternalRequirement;3.0.0.SNAPSHOT">
+    <prefixChange>
+      <source-field>id</source-field>
+      <target-field>internal_id</target-field>
+      <params>
+        <param key="oldPrefix" value="requirement"/>
+        <param key="newPrefix" value="externalRequirement"/>
+      </params>
+    </prefixChange>
+    <forward>
+      <source-field>title</source-field>
+      <target-field>name</target-field>
+    </forward>
+    <forward>
+      <source-field>shortDescription</source-field>
+      <target-field>summary</target-field>
+    </forward>
+    <forward>
+      <source-field>description</source-field>
+      <target-field>informalDescription</target-field>
+    </forward>
+    <forward>
+      <source-field>technicalDescription</source-field>
+      <target-field>technicalDescription</target-field>
+    </forward>
+    <instantiate>
+      <source-fields>
+        <source-field>assignedTo.name</source-field>
+        <source-field>assignedTo.fullName</source-field>
+        <source-field>assignedTo.emailAddress</source-field>
+      </source-fields>
+      <target-field>assigned</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.presentation.model.Worker;3.0.0.SNAPSHOT" />
+      </params>
+    </instantiate>
+    <forward>
+      <source-field>priority</source-field>
+      <target-field>priority</target-field>
+    </forward>
+    <forward>
+      <source-field>type</source-field>
+      <target-field>type</target-field>
+    </forward>
+    <concat>
+      <source-fields>
+        <source-field>estimatedTime.timeValue</source-field>
+        <source-field>estimatedTime.timeUnit</source-field>
+      </source-fields>
+      <target-field>timeEstimation</target-field>
+      <params>
+        <param key="concatString" value=" "/>
+      </params>
+    </concat>
+    <flatList>
+      <source-field>comments</source-field>
+      <target-field>comments</target-field>
+      <params>
+        <param key="concatString" value="#" />
+      </params>
+    </flatList>
+    <forward>
+      <source-field>lastChange</source-field>
+      <target-field>changed</target-field>
+    </forward>
+    <instantiate>
+      <source-fields>
+        <source-field>lastChangeBy.name</source-field>
+        <source-field>lastChangeBy.fullName</source-field>
+        <source-field>lastChangeBy.emailAddress</source-field>
+      </source-fields>
+      <target-field>changedBy</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.presentation.model.Worker;3.0.0.SNAPSHOT" />
+      </params>
+    </instantiate>
+  </transformation>
+  <!-- 
+       transform from counterpart to normal requirement 
+  -->
+  <transformation id="ExternalReqToNormalReq"
+  source="org.openengsb.domain.presentation.model.ExternalRequirement;3.0.0.SNAPSHOT"
+  target="org.openengsb.domain.requirement.Requirement;1.0.0.SNAPSHOT">
+    <prefixChange>
+      <source-field>internal_id</source-field>
+      <target-field>id</target-field>
+      <params>
+        <param key="oldPrefix" value="externalRequirement"/>
+        <param key="newPrefix" value="requirement"/>
+      </params>
+    </prefixChange>
+    <forward>
+      <source-field>name</source-field>
+      <target-field>title</target-field>
+    </forward>
+    <forward>
+      <source-field>summary</source-field>
+      <target-field>shortDescription</target-field>
+    </forward>
+    <forward>
+      <source-field>informalDescription</source-field>
+      <target-field>description</target-field>
+    </forward>
+    <forward>
+      <source-field>technicalDescription</source-field>
+      <target-field>technicalDescription</target-field>
+    </forward>
+    <instantiate>
+      <source-fields>
+        <source-field>assigned.nickname</source-field>
+        <source-field>assigned.name</source-field>
+        <source-field>assigned.email</source-field>
+      </source-fields>
+      <target-field>assignedTo</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.requirement.Person;1.0.0.SNAPSHOT" />
+      </params>
+    </instantiate>
+    <forward>
+      <source-field>priority</source-field>
+      <target-field>priority</target-field>
+    </forward>
+    <forward>
+      <source-field>type</source-field>
+      <target-field>type</target-field>
+    </forward>
+    <instantiate>
+      <target-field>estimatedTime</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.requirement.ManUnits;1.0.0.SNAPSHOT"/>
+      </params>
+    </instantiate>
+    <split>
+      <source-field>timeEstimation</source-field>
+      <target-field>estimatedTime.timeUnit</target-field>
+      <params>
+        <param key="splitString" value=" "/>
+        <param key="resultIndex" value="1"/>
+      </params>
+    </split>
+    <split>
+      <source-field>timeEstimation</source-field>
+      <target-field>#timeValue</target-field>
+      <params>
+        <param key="splitString" value=" "/>
+        <param key="resultIndex" value="0"/>
+      </params>
+    </split>
+    <instantiate>
+      <source-fields>
+        <source-field>#timeValue</source-field>
+      </source-fields>
+      <target-field>estimatedTime.timeValue</target-field>
+      <params>
+        <param key="targetType" value="java.lang.Integer"/>
+        <param key="targetTypeInit" value="parseInt"/>
+      </params>
+    </instantiate>
+    <createList>
+      <source-field>comments</source-field>
+      <target-field>comments</target-field>
+      <params>
+        <param key="splitString" value="#" />
+      </params>
+    </createList>
+    <forward>
+      <source-field>changed</source-field>
+      <target-field>lastChange</target-field>
+    </forward>
+    <instantiate>
+      <source-fields>
+        <source-field>changedBy.nickname</source-field>
+        <source-field>changedBy.name</source-field>
+        <source-field>changedBy.email</source-field>
+      </source-fields>
+      <target-field>lastChangeBy</target-field>
+      <params>
+        <param key="targetType" value="org.openengsb.domain.requirement.Person;1.0.0.SNAPSHOT" />
+      </params>
+    </instantiate>
+  </transformation>
+</transformations>

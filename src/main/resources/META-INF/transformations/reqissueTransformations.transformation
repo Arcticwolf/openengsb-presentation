@@ -1,0 +1,138 @@
+<transformations>
+	<transformation id="RequirementToIssueForDeveloper" 
+		source="org.openengsb.domain.requirement.Requirement;1.0.0.SNAPSHOT"
+	    target="org.openengsb.domain.issue.Issue;3.0.0.SNAPSHOT">
+	    <prefixChange>
+      		<source-field>id</source-field>
+      		<target-field>id</target-field>
+      		<params>
+        		<param key="oldPrefix" value="requirement"/>
+        		<param key="newPrefix" value="issue"/>
+      		</params>
+    	</prefixChange>
+    	<forward>
+    		<source-field>shortDescription</source-field>
+    		<target-field>summary</target-field>
+    	</forward>
+    	<forward>
+    		<source-field>technicalDescription</source-field>
+    		<target-field>description</target-field>
+    	</forward>
+    	<forward>
+    		<source-field>assignedTo.name</source-field>
+    		<target-field>owner</target-field>
+    	</forward>
+    	<forward>
+    		<source-field>lastChangeBy.name</source-field>
+    		<target-field>reporter</target-field>
+    	</forward>
+    	<instantiate>
+      		<source-field>priority</source-field>
+      		<target-field>priority</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Priority;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<value>
+    		<target-field>#status</target-field>
+    		<params>
+    			<param key="value" value="NEW"/>
+    		</params>
+    	</value>
+    	<instantiate>
+      		<source-field>#status</source-field>
+      		<target-field>status</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Status;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<value>
+    		<target-field>#type</target-field>
+    		<params>
+    			<param key="value" value="NEW_FEATURE"/>
+    		</params>
+    	</value>
+    	<instantiate>
+      		<source-field>#type</source-field>
+      		<target-field>type</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Type;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<instantiate>
+      		<target-field>components</target-field>
+      		<params>
+        		<param key="targetType" value="java.util.ArrayList" />
+      		</params>
+    	</instantiate>
+	</transformation>
+	<transformation id="RequirementToIssue" 
+		source="org.openengsb.domain.requirement.Requirement;1.0.0.SNAPSHOT"
+	    target="org.openengsb.domain.issue.Issue;3.0.0.SNAPSHOT">
+	    <prefixChange>
+      		<source-field>id</source-field>
+      		<target-field>id</target-field>
+      		<params>
+        		<param key="oldPrefix" value="requirement"/>
+        		<param key="newPrefix" value="issue"/>
+      		</params>
+    	</prefixChange>
+    	<forward>
+    		<source-field>shortDescription</source-field>
+    		<target-field>summary</target-field>
+    	</forward>
+    	<forward>
+    		<source-field>technicalDescription</source-field>
+    		<target-field>description</target-field>
+    	</forward>
+    	<forward>
+    		<source-field>lastChangeBy.name</source-field>
+    		<target-field>reporter</target-field>
+    	</forward>
+    	<instantiate>
+      		<source-field>priority</source-field>
+      		<target-field>priority</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Priority;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<value>
+    		<target-field>#status</target-field>
+    		<params>
+    			<param key="value" value="NEW"/>
+    		</params>
+    	</value>
+    	<instantiate>
+      		<source-field>#status</source-field>
+      		<target-field>status</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Status;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<value>
+    		<target-field>#type</target-field>
+    		<params>
+    			<param key="value" value="NEW_FEATURE"/>
+    		</params>
+    	</value>
+    	<instantiate>
+      		<source-field>#type</source-field>
+      		<target-field>type</target-field>
+      		<params>
+        		<param key="targetType" value="org.openengsb.domain.issue.Type;3.0.0.SNAPSHOT" />
+        		<param key="targetTypeInit" value="valueOf" />
+      		</params>
+    	</instantiate>
+    	<instantiate>
+      		<target-field>components</target-field>
+      		<params>
+        		<param key="targetType" value="java.util.ArrayList" />
+      		</params>
+    	</instantiate>
+	</transformation>
+</transformations>
